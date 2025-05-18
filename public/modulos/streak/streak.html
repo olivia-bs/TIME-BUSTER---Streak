@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIME BUSTER - Streak</title>
+  <link rel="stylesheet" href="../../assets/css/streak.css" /> <!-- Caminho CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <script src="https://kit.fontawesome.com/6facf3bd62.js" crossorigin="anonymous"></script> <!-- Ícones -->
+  <!-- Topo da Página -->
+  <header>
+    <div class="topo">
+      <div class="logo">
+        <a href="#" class="logo"> <!-- Caminho Home -->
+          <img src="../../assets/images/LOGO - Time Buster.jpg" alt="Logotipo" /> <!-- Caminho LOGO -->
+        </a>
+      </div>
+      <p>Streak</p>
+      <div class="perfil-streak">
+        <i class="fa-solid fa-fire fogo-streak">&nbsp;<p class="contagem-streak">0</p></i>
+        <img src="" alt="Foto de Perfil" class="foto" />
+      </div>
+    </div>
+  </header>
+  <!-- Menu Lateral -->
+  <aside>
+    <div class="menu-lateral">
+      <a href="./index.html"><i class="fa-solid fa-house-chimney"></i>
+        <p class="caminho">TAREFAS</p>
+      </a> <!-- Caminho Home -->
+      <a href="#"><i class="fa-solid fa-medal"></i>
+        <p class="caminho">N/D</p>
+      </a> <!-- Caminho Conquistas - AINDA NÃO DISPONÍVEL -->
+      <a href="./streak.html"><i class="fa-solid fa-fire"></i>
+        <p class="caminho">STREAK</p>
+      </a> <!-- Caminho Streak -->
+    </div>
+  </aside>
+  <!-- Streak -->
+  <main>
+    <div class="streak">
+      <div class="usuario">
+        <img src="" alt="Foto de Perfil" class="foto-usuario" />
+        <p class="nome-usuario"></p>
+      </div>
+      <section class="streak-atual">
+        <i class="fa-solid fa-fire">
+          <p> Streak Atual:</p>
+        </i><br />
+        <p class="contagem-streak">0</p>
+        <p>&nbspdia(s)</p>
+      </section>
+      <div class="maior-e-ativos">
+        <section class="maior-streak">
+          <i class="fa-solid fa-trophy">
+            <p> Maior Streak:</p>
+          </i><br />
+          <p class="contagem-maior">0</p>
+          <p>&nbspdia(s)</p>
+        </section>
+        <section class="dias-ativos">
+          <i class="fa-solid fa-calendar-days">
+            <p> Dias Ativos:</p>
+          </i><br />
+          <p class="contagem-ativo">0</p>
+          <p>&nbspdia(s)</p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script src="../../assets/js/streak.js"></script> <!-- Caminho Streak (js) -->
+</body>
+
+</html>

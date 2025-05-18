@@ -1,0 +1,18 @@
+{
+  "tarefas": [
+    {
+      "id": "c46e",
+      "data": "2025-07-25",
+      "titulo": "Tarefa Teste 1",
+      "descricao": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, non.",
+      "completo": false
+    },
+    {
+      "id": "9d01",
+      "data": "2025-09-07",
+      "titulo": "Tarefa Teste 2",
+      "descricao": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, non.",
+      "completo": false
+    }
+  ]
+}

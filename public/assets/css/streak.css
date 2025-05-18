@@ -1,0 +1,201 @@
+/* Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0C1B38;
+    color: #F6F6F6;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 75vh;
+}
+
+/* INÍCIO - Topo da Página */
+.topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+    padding: 2.5rem 1rem;
+    position: relative;
+}
+
+.logo img {
+    width: auto;
+    height: 17vh;
+}
+
+.topo>p {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.perfil-streak {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+}
+
+.fogo-streak {
+    color: #FFA300;
+    font-size: 3vh;
+    display: inline;
+}
+
+.fogo-streak .contagem-streak{
+display: inline;
+font-size: 3vh;
+}
+
+.foto {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* FIM - Topo da Página */
+/* INÍCIO - Menu Lateral */
+
+.menu-lateral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(246, 246, 246, 0.3);
+    width: 6.5vw;
+    height: 70vh;
+    margin: 4vh 2vw;
+    gap: auto;
+    border-radius: 80px;
+    position: absolute;
+}
+
+.menu-lateral a {
+    color: #FFA300;
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out;
+}
+
+.menu-lateral a:hover {
+    color: #0C1B38;
+    transform: scale(1.3); 
+}
+
+.menu-lateral i {
+    width: auto;
+    font-size: 6vh;
+    padding: 0 1vw;
+    border-radius: 50%;
+}
+
+.caminho{
+    position: relative;
+    font-size: 2vh;
+    text-align: center;
+    font-weight: bold;
+}
+/* FIM - Menu Lateral */
+/* INÍCIO - Streaks */
+.streak {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15vw;
+    width: auto;
+    height: 80vh;
+    gap: 4vh;
+    font-weight: bold;
+    color:#FFA300;
+}
+
+.usuario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5vh;
+}
+
+.foto-usuario{
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+}
+
+.nome-usuario{
+    font-size: 1.5vw;
+}
+
+.streak p{
+    display: inline;
+}
+
+i p{
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+}
+
+.streak-atual{
+    padding: 25px;
+    text-align: center;
+    width: 50vw;
+}
+
+.streak-atual, .maior-streak, .dias-ativos{
+    background-color: rgba(246, 246, 246, 0.3);
+    border-radius: 80px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.streak-atual p, .maior-streak p, .dias-ativos p{
+    color: #0C1B38;
+}
+
+.streak-atual i p, .maior-streak i p, .dias-ativos i p{
+    color: #FFA300;
+}
+
+.streak-atual:hover, .maior-streak:hover, .dias-ativos:hover{
+    background-color: rgba(246, 246, 246, 1);
+    transform: scale(1.1); 
+}
+
+.streak-atual .fa-fire , .streak-atual .fa-fire p{
+    font-size: 2.5vw;
+}
+
+.streak-atual .contagem, p{
+    font-size: 2.5vw;
+}
+
+.maior-e-ativos{
+    display: flex;
+    text-align: center;
+    gap: 3vw;
+}
+
+.maior-e-ativos i, .maior-e-ativos i p{
+    font-size: 2vw;
+}
+
+.maior-e-ativos p{
+    font-size: 2vw;
+}
+
+.dias-ativos, .maior-streak{
+    padding: 30px;
+    width: 30vw;
+}

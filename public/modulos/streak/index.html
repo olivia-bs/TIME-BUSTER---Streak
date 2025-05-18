@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciador de Tarefas</title>
+  <!-- Link para o CSS externo -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+
+<body>
+  <div class="acessar-streak">
+    <script src="https://kit.fontawesome.com/6facf3bd62.js" crossorigin="anonymous"></script> <!-- Ícones -->
+    <a href="./streak.html"><i class="fa-solid fa-fire"></i>
+      <p class="caminho">STREAK</p>
+    </a> <!-- Caminho Streak -->
+  </div>
+  <!-- Página principal -->
+  <div class="homepage">
+    <h1>Minhas Tarefas</h1>
+
+    <!-- Carrossel de cards de tarefas -->
+    <div class="carrossel">
+      <!-- Botão de rolagem para a esquerda -->
+      <button class="carrossel-btn esquerda" onclick="scrollCards(-1)">❮</button>
+
+      <!-- Container onde os cards de tarefas são adicionados dinamicamente -->
+      <div class="card-container" id="cards-container"></div>
+
+      <!-- Botão de rolagem para a direita -->
+      <button class="carrossel-btn direita" onclick="scrollCards(1)">❯</button>
+    </div>
+
+    <!-- Botão para abrir o modal de cadastro -->
+    <button class="btn-cadastro" id="cadastro-homepage" onclick="abrirCadastro()">ADCIONAR +</button>
+  </div>
+
+  <!-- Modal para cadastro de tarefa -->
+  <div id="overlayCadastro" class="overlay">
+    <div class="cadastro-caixa">
+      <!-- Botão para fechar o modal -->
+      <span class="fechar" onclick="fecharCadastro()">&times;</span>
+      <h2>Novo Cadastro</h2>
+      <!-- Formulário para adicionar tarefa -->
+      <form class="form-cadastro" onsubmit="salvarCadastro(event)">
+        <section class="cadastro-titulo-data">
+          <input type="text" id="titulo" placeholder="Titulo" required><br><br>
+          <input type="date" id="data" name="data" required>
+        </section>
+        <input type="text" id="descricao" class="descricao" placeholder="Descrição">
+        <button type="submit" id="btn-concluir" class="btn-overlay">CONCLUIR</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para visualizar os detalhes de uma tarefa -->
+  <div id="overlayDetalhes" class="overlay">
+    <div class="cadastro-caixa">
+      <!-- Botão para fechar o modal -->
+      <span class="fechar" onclick="fecharDetalhes()">&times;</span>
+      <section class="detalhe-titulo-data">
+        <!-- Título e data da tarefa selecionada -->
+        <p id="detalhe-titulo"></p>
+        <p id="detalhe-data"></p>
+      </section>
+      <!-- Descrição da tarefa -->
+      <p id="detalhe-descricao"></p>
+      <section class="botoes">
+        <!-- Checkbox para marcar como completa -->
+        <input type="checkbox" id="detalhe-checkbox">
+        <!-- Botão para apagar a tarefa -->
+        <button id="btn-apagar" class="btn-overlay">APAGAR</button>
+      </section>
+    </div>
+  </div>
+
+  <!-- Script principal do site -->
+  <script src="../../assets/js/index.js"></script>
+  <!-- Script para streak -->
+  <script src="streak.js"></script>
+</body>
+
+</html>
