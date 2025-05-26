@@ -1,5 +1,7 @@
 // URL bae da API local gerada pelo JSON Server (db.json)
 const API_URL = "http://localhost:3000/tarefas";
+const STREAK_API_URL = "http://localhost:3000/streak";
+const FOTO_PADRAO = "https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png"; 
 
 // modal: é a caixinha que abre e sobrepõe a homepage quando 
 // a gente vai adicionar ou ver os detalhes de uma tarefa
@@ -27,7 +29,7 @@ function abrirDetalhes(tarefa) {
   // quando o checkbox for alterado, atualiza a tarefa no db.json
   checkbox.onchange = () => {
     tarefa.completo = checkbox.checked;
-    atualizarTarefa(tarefa);
+    atualizarTarefa(tarefa).then(() => verificarStreak());
   };
 
   // define ação do botão de apagar tarefa
@@ -47,7 +49,7 @@ function fecharDetalhes() {
   document.getElementById("overlayDetalhes").style.display = "none";
 }
 
- // salva o cadastro de uma nova tarefa no JSON Server
+// salva o cadastro de uma nova tarefa no JSON Server
 function salvarCadastro(event) {
   event.preventDefault();
 
@@ -78,7 +80,7 @@ function salvarCadastro(event) {
         document.getElementById("data").value = "";
         document.getElementById("titulo").value = "";
         document.getElementById("descricao").value = "";
-        atualizarStreakAoAtividade(); // Da streak
+        verificarStreak(); // DA STREAK
       });
   }
 }
@@ -92,13 +94,14 @@ function formatarData(dataISO) {
 // atualizaz o status de conclusão da tarefa (checkbox)
 function alternarConclusao(tarefa, checked) {
   tarefa.completo = checked;
-  atualizarTarefa(tarefa);
-  atualizarStreakAoAtividade(); // Da streak
+  atualizarTarefa(tarefa)
+    .then(verificarStreak) // Chama após atualização - DA STREAK
+    .catch(error => console.error("Erro:", error));
 }
 
 // envia a tarefa atualizada para o servidor
 function atualizarTarefa(tarefa) {
-  fetch(`${API_URL}/${tarefa.id}`, {
+  return fetch(`${API_URL}/${tarefa.id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(tarefa)
@@ -156,45 +159,102 @@ function scrollCards(direcao) {
   container.scrollLeft += direcao * larguraCard * 2;
 }
 
-// ---------- Da strak ----------
-function atualizarStreakAoAtividade() {
-  let streak = JSON.parse(localStorage.getItem("streak")) || {
-    streakAtual: 0,
-    maiorStreak: 0,
-    diasAtivos: 0,
-    ultimoDia: null,
-    ultimoIncremento: null
-  };
+// ==========
+// DA STREAK
+// ==========
 
-  const hoje = new Date().toISOString().split("T")[0];
 
-  if (streak.ultimoIncremento !== hoje) {
-    // Streak atual
-    const ontem = new Date();
-    ontem.setDate(ontem.getDate() - 1);
-    const dataOntem = ontem.toISOString().split("T")[0];
+// Verifica e atualiza o streak quando uma ação é realizada
 
-    if (streak.ultimoIncremento === dataOntem) {
-      streak.streakAtual += 1;
-    } else {
-      streak.streakAtual = 1;
+/**
+ * Verifica e atualiza o streak quando uma ação relevante é realizada
+ * (adicionar tarefa ou marcar como concluída)
+ */
+async function verificarStreak() {
+  try {
+    // 1. Obtém a data atual no formato YYYY-MM-DD
+    const hoje = new Date();
+    const hojeISO = hoje.toISOString().split('T')[0];
+    
+    // 2. Busca os dados atuais do streak
+    const response = await fetch(STREAK_API_URL);
+    const streakData = await response.json();
+    
+    console.log('[DEBUG] Dados do streak:', streakData); // Log para debug
+
+    // 3. Se já atualizou hoje, não faz nada
+    if (streakData.ultimaAtualizacao === hojeISO) {
+      console.log('[DEBUG] Streak já atualizado hoje');
+      return;
     }
 
-    // Maior streak
-    if (streak.streakAtual > streak.maiorStreak) {
-      streak.maiorStreak = streak.streakAtual;
+    // 4. Calcula diferença de dias desde a última atualização
+    let diffDias = 1; // Valor padrão para primeira atualização
+    
+    if (streakData.ultimaAtualizacao) {
+      const ultimaAtualizacao = new Date(streakData.ultimaAtualizacao);
+      const diffMilissegundos = hoje - ultimaAtualizacao;
+      diffDias = Math.floor(diffMilissegundos / (1000 * 60 * 60 * 24));
+      
+      console.log(`[DEBUG] Diferença de dias: ${diffDias}`);
     }
 
-    // Dias ativos
-    if (streak.ultimoDia !== hoje) {
-      streak.diasAtivos += 1;
-      streak.ultimoDia = hoje;
+    // 5. Prepara os novos dados do streak
+    const novoStreak = {
+      ...streakData,
+      ultimaAtualizacao: hojeISO,
+      diasAtivos: streakData.diasAtivos + 1
+    };
+
+    // 6. Atualiza o streak atual e maior streak
+    if (diffDias === 1) {
+      // Consecutivo: incrementa streak
+      novoStreak.streakAtual = streakData.streakAtual + 1;
+      novoStreak.maiorStreak = Math.max(novoStreak.streakAtual, streakData.maiorStreak);
+    } else if (diffDias > 1) {
+      // Quebrou a sequência: reseta streak atual
+      novoStreak.streakAtual = 1;
+    }
+    // diffDias = 0 (mesmo dia) já foi tratado no início
+
+    console.log('[DEBUG] Novo streak:', novoStreak);
+
+    // 7. Atualiza no servidor
+    await fetch(STREAK_API_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(novoStreak)
+    });
+
+    // 8. Atualiza a UI se estiver na página de streak
+    if (window.location.pathname.includes('streak.html')) {
+      atualizarUIStreak(novoStreak);
     }
 
-    streak.ultimoIncremento = hoje;
-    localStorage.setItem("streak", JSON.stringify(streak));
+  } catch (error) {
+    console.error('[ERRO] Falha ao atualizar streak:', error);
   }
 }
 
-// busca e exibe as tarefas quando o site carrega
+/**
+ * Atualiza a interface com os dados do streak
+ * @param {Object} streakData - Dados do streak
+ */
+function atualizarUIStreak(streakData) {
+  // Atualiza todos os contadores de streak na página
+  document.querySelectorAll('.contagem-streak').forEach(el => {
+    el.textContent = streakData.streakAtual;
+  });
+  
+  document.querySelector('.contagem-maior').textContent = streakData.maiorStreak;
+  document.querySelector('.contagem-ativo').textContent = streakData.diasAtivos;
+  
+  // Atualiza foto do usuário (ou usa padrão)
+  const fotoPadrao = 'https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png';
+  document.querySelectorAll('.foto, .foto-usuario').forEach(img => {
+    img.src = streakData.fotoUsuario || fotoPadrao;
+  });
+}
+
+// Carrega as tarefas quando a página é aberta
 carregarTarefas();

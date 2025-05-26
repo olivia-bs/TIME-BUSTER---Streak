@@ -8,11 +8,18 @@
       "completo": false
     },
     {
-      "id": "9d01",
-      "data": "2025-09-07",
-      "titulo": "Tarefa Teste 2",
-      "descricao": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, non.",
+      "id": "5812",
+      "data": "2025-09-17",
+      "titulo": "Teste 2",
+      "descricao": "Uhuuuuuuuuuulllllll",
       "completo": false
     }
-  ]
+  ],
+  "streak": {
+    "ultimaAtualizacao": "2025-05-26",
+    "streakAtual": 10,
+    "maiorStreak": 5,
+    "diasAtivos": 1,
+    "fotoUsuario": ""
+  }
 }

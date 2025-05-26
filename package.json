@@ -14,5 +14,13 @@
   "dependencies": {
     "json-server": "^1.0.0-beta.3"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olivia-bs/TIME-BUSTER---Streak.git"
+  },
+  "bugs": {
+    "url": "https://github.com/olivia-bs/TIME-BUSTER---Streak/issues"
+  },
+  "homepage": "https://github.com/olivia-bs/TIME-BUSTER---Streak#readme"
 }
